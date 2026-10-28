@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'LittlelemonAPI'
+    'LittlelemonAPI',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'Littlelemon.urls'
@@ -131,3 +133,8 @@ REST_FRAMEWORK = {
         'rest_framework_xml.renderers.XMLRenderer',
     ]
 }   
+
+# Internal IPs for debug toolbar
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
