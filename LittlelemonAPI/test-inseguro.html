@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+	<html>
+	<body>
+	  <h3>innerHTML (inseguro)</h3>
+	  <div id="inseguro"></div>
+	
+	  <h3>textContent (seguro)</h3>
+	  <div id="seguro"></div>
+	
+	  <script>
+	    fetch('http://localhost:8000/api/menu-items')
+	      .then(r => r.json())
+	      .then(data => {
+	        const lista = data.results || data;
+	        lista.forEach(p => {
+	          document.getElementById('inseguro').innerHTML += p.title + '<br>';
+	          document.getElementById('seguro').textContent += p.title + ' | ';
+	        });
+	      });
+	  </script>
+	</body>
+	</html>
