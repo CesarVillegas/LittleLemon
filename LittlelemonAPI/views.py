@@ -6,6 +6,18 @@ from .serializers import menuItemSerializer
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
 
+# class-based views
+from rest_framework import viewsets
+
+class MenuItemsViewSet(viewsets.ModelViewSet):
+    queryset = MenuItem.objects.all()
+    serializer_class = menuItemSerializer
+    ordering_fields=['price','inventory']
+    ordering = ['id']                       # orden por defecto, quita el warning
+    search_fields=['title','category__title']
+
+
+
 @api_view(['GET', 'POST'])
 def menu_items(request):
     if request.method == 'GET':
