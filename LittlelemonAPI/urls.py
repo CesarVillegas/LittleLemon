@@ -17,4 +17,7 @@ urlpatterns = [
     
     # added for authentication
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    
+    # added for manager view
+    path('manager-view', views.manager_view),  
 ]
