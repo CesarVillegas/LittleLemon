@@ -6,6 +6,9 @@ from .serializers import menuItemSerializer
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+
 # class-based views
 from rest_framework import viewsets
 
@@ -65,3 +68,9 @@ def single_item(request, id):
     item = get_object_or_404(MenuItem, pk=id)
     serialized_item = menuItemSerializer(item)
     return Response(serialized_item.data)
+
+
+@api_view()
+@permission_classes([IsAuthenticated])
+def secret(request):
+    return Response({"message": "Some secret message!"})
