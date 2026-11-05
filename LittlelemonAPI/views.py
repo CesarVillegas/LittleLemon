@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, throttle_classes
 from rest_framework import status
 from .models import MenuItem
 from .serializers import menuItemSerializer
@@ -11,6 +11,12 @@ from rest_framework.decorators import permission_classes
 
 # class-based views
 from rest_framework import viewsets
+
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
+
+from .throttles import TenCallsPerMinute
+
+
 
 class MenuItemsViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all()
@@ -83,3 +89,16 @@ def manager_view(request):
         return Response({"message": "Hello Manager!"})
     else:
         return Response({"message": "You are not a manager."}, status=status.HTTP_403_FORBIDDEN)
+    
+
+@api_view()
+@throttle_classes([AnonRateThrottle])
+def throttle_check(request):
+    return Response({"message": "This is a throttled view."})
+
+
+@api_view()
+@permission_classes([IsAuthenticated])
+@throttle_classes([TenCallsPerMinute])
+def throttle_check_auth(request):
+    return Response({"message": "message for authenticated users."})

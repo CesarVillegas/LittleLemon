@@ -20,4 +20,11 @@ urlpatterns = [
     
     # added for manager view
     path('manager-view', views.manager_view),  
+    
+    # added for throttle check
+    path('throttle_check', views.throttle_check),
+    
+    # added for throttle check for authenticated users
+    path('throttle_check_auth', views.throttle_check_auth),
 ]
+
