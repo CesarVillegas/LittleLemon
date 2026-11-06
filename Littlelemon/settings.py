@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'LittlelemonAPI',
+    'djoser',
     'debug_toolbar'
 ]
 
@@ -138,9 +139,10 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    ],
+        'rest_framework.authentication.SessionAuthentication',
+    ),
     'DEFAULT_THROTTLE_RATES': {
         'anon': '20/day',
         'user': '5/minute',
@@ -152,6 +154,16 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 	'PAGE_SIZE': 2
+}
+
+DJOSER = {
+    'USER_ID_FIELD': 'username',
+    'LOGIN_FIELD': 'email',
+    # 'USER_CREATE_PASSWORD_RETYPE': True,
+    # 'SERIALIZERS': {
+    #     'user_create': 'LittlelemonAPI.serializers.UserCreateSerializer',
+    #     'user': 'LittlelemonAPI.serializers.UserSerializer',
+    # },
 }
 
 # Internal IPs for debug toolbar

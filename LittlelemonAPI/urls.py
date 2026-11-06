@@ -27,5 +27,6 @@ urlpatterns = [
     # added for throttle check for authenticated users
     path('throttle_check_auth', views.throttle_check_auth),
     
+
 ]
 
