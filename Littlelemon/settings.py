@@ -146,6 +146,10 @@ REST_FRAMEWORK = {
         'user': '5/minute',
         'ten': '10/minute',
     },
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 	'PAGE_SIZE': 2
 }

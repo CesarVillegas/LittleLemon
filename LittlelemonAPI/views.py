@@ -17,7 +17,6 @@ from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 from .throttles import TenCallsPerMinute
 
 
-
 class MenuItemsViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all()
     serializer_class = menuItemSerializer
@@ -102,3 +101,24 @@ def throttle_check(request):
 @throttle_classes([TenCallsPerMinute])
 def throttle_check_auth(request):
     return Response({"message": "message for authenticated users."})
+
+
+
+# Then create a public property called throttle_classes with either one or both of these two classes,
+# class MenuItemsViewSet(viewsets.ModelViewSet):
+#     throttle_classes = [AnonRateThrottle, UserRateThrottle]  # los elementos del menú estarán sujetos a limitación de tasa (throttling), 
+#     queryset = MenuItem.objects.all()
+#     serializer_class = menuItemSerializer
+    
+    
+# Conditional throttling
+class MenuItemsViewSet(viewsets.ModelViewSet):
+    queryset = MenuItem.objects.all()
+    serializer_class = menuItemSerializer
+    def get_throttles(self):
+        if self.action == 'create':                  # solo cuando es un POST (crear)
+            throttle_classes = [UserRateThrottle]
+        else:
+            throttle_classes = []                   # list, retrieve, update, etc. sin límite
+            # throttle_classes = [TenCallsPerMinute]
+        return [throttle() for throttle in throttle_classes]
